@@ -11,8 +11,8 @@ npm install
 ## 2. Set Up .env file
 Create a .env file in the root project directory with the following content:
 ```
-# Fantom testnet RPC URL
-FTM_RPC_URL=https://rpc.testnet.fantom.network
+# SONIC testnet RPC URL
+FTM_RPC_URL=https://rpc.blaze.soniclabs.com
 
 # Private key of the wallet that will deploy the contract (no quotes)
 PRIVATE_KEY=your_private_key_without_quotes
@@ -20,7 +20,7 @@ PRIVATE_KEY=your_private_key_without_quotes
 ## 3. Compile smart contract
 In the Hardhat backend (root folder):
 `npx hardhat compile`
-## 4. Deploy smart contract to Fantom Testnet
+## 4. Deploy smart contract to Sonic Testnet
 `npx hardhat run scripts/deploy.js --network fantomTestnet` <br/>
 Copy the deployed contract address from the output (needed in the frontend).
 ## 5. Export ABI to frontend
@@ -40,8 +40,8 @@ cd frontend
 npm run dev
 ```
 ## 8. Interact
-- Connect MetaMask to Fantom testnet
-- Add 0.1 FTM to the contract
-- Extract 0.05 FTM (only as the contract owner)
+- Connect MetaMask to Sonic testnet
+- Add 0.1 Sonic to the contract
+- Extract 0.05 Sonic (only as the contract owner)
 - View contract balance
 
