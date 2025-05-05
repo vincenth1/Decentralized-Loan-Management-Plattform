@@ -21,7 +21,7 @@ PRIVATE_KEY=your_private_key_without_quotes
 In the Hardhat backend (root folder):
 `npx hardhat compile`
 ## 4. Deploy smart contract to Sonic Testnet
-`npx hardhat run scripts/deploy.js --network fantomTestnet` <br/>
+`npx hardhat run scripts/deploy.js --network sonicTestnet` <br/>
 Copy the deployed contract address from the output (needed in the frontend).
 ## 5. Export ABI to frontend
 `cp artifacts/contracts/LiquidityPool.sol/LiquidityPool.json frontend/src/LiquidityPool.json`
