@@ -15,7 +15,7 @@ Create a .env file in the root project directory with the following content:
 FTM_RPC_URL=https://rpc.testnet.fantom.network
 
 # Private key of the wallet that will deploy the contract (no quotes)
-FANTOM_PRIVATE_KEY=your_private_key_without_quotes
+PRIVATE_KEY=your_private_key_without_quotes
 ```
 ## 3. Compile smart contract
 In the Hardhat backend (root folder):
