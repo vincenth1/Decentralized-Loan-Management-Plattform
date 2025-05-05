@@ -7,8 +7,13 @@ module.exports = {
   networks: {
     fantomTestnet: {
       url: process.env.FTM_RPC_URL,
-      accounts: [process.env.FANTOM_PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 4002,
+    },
+    sonicTestnet: {
+      url: process.env.SONIC_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 57054,
     }
   }
 };

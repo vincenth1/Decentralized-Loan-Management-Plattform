@@ -4,7 +4,7 @@ import "./App.css";
 import contractJson from "./LiquidityPool.json";
 
 // Replace with your deployed contract address
-const CONTRACT_ADDRESS = "0x1C79DC596476420717a64421288a01996427D479";
+const CONTRACT_ADDRESS = "0x80D20F4739A4098421C5Fb3d3677a590D9ea8303";
 
 // Replace with your actual ABI from artifacts
 const ABI = contractJson.abi;
@@ -76,10 +76,10 @@ function App() {
         {account ? `Connected: ${account.slice(0, 6)}...` : "Connect Wallet"}
       </button>
 
-      <p>Pool Balance: {balance} FTM</p>
+      <p>Pool Balance: {balance} Sonic</p>
 
-      <button onClick={handleAddFunds}>Add 0.1 FTM</button>
-      <button onClick={handleExtract}>Extract 0.05 FTM</button>
+      <button onClick={handleAddFunds}>Add 0.1 Sonic</button>
+      <button onClick={handleExtract}>Extract 0.05 Sonic</button>
     </div>
   );
 }
