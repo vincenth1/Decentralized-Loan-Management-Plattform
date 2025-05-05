@@ -4,7 +4,7 @@ import "./App.css";
 import contractJson from "./LiquidityPool.json";
 
 // Replace with your deployed contract address
-const CONTRACT_ADDRESS = "0x80D20F4739A4098421C5Fb3d3677a590D9ea8303";
+const CONTRACT_ADDRESS = "0xf6e51a065444A557A395893f78208F0D1703e2c8";
 
 // Replace with your actual ABI from artifacts
 const ABI = contractJson.abi;
@@ -15,6 +15,7 @@ function App() {
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState("0");
+  const [debt, setDebt] = useState("0");
 
   // Connect wallet
   const connectWallet = async () => {
@@ -43,6 +44,14 @@ function App() {
     }
   };
 
+  // Fetch debt
+  const fetchDebt = async () => {
+    if (contract) {
+      const userDebt = await contract.getMyDebt();
+      setDebt(ethers.formatEther(userDebt));
+    }
+  };
+
   // Add funds
   const handleAddFunds = async () => {
     try {
@@ -64,9 +73,34 @@ function App() {
     fetchBalance();
   };
 
+  const handleBorrow = async () => {
+    try {
+      const tx = await contract.borrow(ethers.parseEther("0.05"));
+      await tx.wait();
+      fetchBalance();
+      fetchDebt();
+    } catch (error) {
+      console.error("Error borrowing funds:", error);
+    }
+  };
+
+  const handleRepay = async () => {
+    try {
+      const tx = await contract.repay({ value: ethers.parseEther("0.05") });
+      await tx.wait();
+      fetchBalance();
+      fetchDebt();
+    } catch (error) {
+      console.error("Error repaying funds:", error);
+    }
+  };
+
   // Auto fetch when contract changes
   useEffect(() => {
-    if (contract) fetchBalance();
+    if (contract) {
+      fetchBalance();
+      fetchDebt();
+    }
   }, [contract]);
 
   return (
@@ -77,9 +111,12 @@ function App() {
       </button>
 
       <p>Pool Balance: {balance} Sonic</p>
+      <p>Your Debt: {debt} Sonic</p>
 
       <button onClick={handleAddFunds}>Add 0.1 Sonic</button>
       <button onClick={handleExtract}>Extract 0.05 Sonic</button>
+      <button onClick={handleBorrow}>Borrow 0.05 Sonic</button>
+      <button onClick={handleRepay}>Repay 0.05 Sonic</button>
     </div>
   );
 }
