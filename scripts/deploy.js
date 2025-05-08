@@ -1,11 +1,17 @@
-const hre = require("hardhat");
+const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-    const pool = await hre.ethers.deployContract("LiquidityPool");
+    const LiquidityPoolV1 = await ethers.getContractFactory("LiquidityPoolV1");
+    const [deployer] = await ethers.getSigners();
 
-    await pool.waitForDeployment();
+    // Deploy the proxy (this will also deploy the implementation behind the scenes)
+    const proxy = await upgrades.deployProxy(LiquidityPoolV1, [deployer.address], {
+        initializer: "initialize",
+    });
 
-    console.log("LiquidityPool deployed to:", await pool.getAddress());
+    await proxy.waitForDeployment();
+
+    console.log("LiquidityPool Proxy deployed to:", await proxy.getAddress());
 }
 
 main().catch((error) => {
