@@ -46,3 +46,19 @@ npm run dev
 - Extract 0.05 Sonic (only as the contract owner)
 - View contract balance
 
+# 9. Upgrade to a new logic contract
+To upgrade to a LiquidityPoolV2 with new logic:
+```
+contract LiquidityPoolV2 is LiquidityPoolV1 {
+    function version() public pure returns (string memory) {
+        return "V2";
+    }
+}
+```
+And in the `deploy.js` Hardhat script:
+```
+const LiquidityPoolV2 = await ethers.getContractFactory("LiquidityPoolV2");
+await upgrades.upgradeProxy(proxyAddress, LiquidityPoolV2);
+
+```
+
