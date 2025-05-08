@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
-import contractJson from "./LiquidityPool.json";
+import contractJson from "./LiquidityPoolV1.json";
 
 // Replace with your deployed contract address
-const CONTRACT_ADDRESS = "0x021de5aF12607eb833b90277e02e99DA6E758f9D";
+const CONTRACT_ADDRESS = "0xdB697Df032379fD61D2C8739ACa25ad46B5C6c25";
 
 // Replace with your actual ABI from artifacts
 const ABI = contractJson.abi;
@@ -237,7 +237,7 @@ function App() {
                 <button className="admin-button" onClick={handleExtract}>
                   Extract 0.05 SONIC
                 </button>
-                
+
                 <div className="credit-score-controls">
                   <h3>Assign Credit Score</h3>
                   <div className="input-group">
