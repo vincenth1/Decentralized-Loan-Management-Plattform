@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
-import contractJson from "./LiquidityPool.json";
+import contractJson from "./LiquidityPoolV1.json";
 
 // Replace with your deployed contract address
-const CONTRACT_ADDRESS = "0x80D20F4739A4098421C5Fb3d3677a590D9ea8303";
+const CONTRACT_ADDRESS = "0x524C5F657533e3E8Fc0Ee137eB605a1d4FFE4D7D";
 
 // Replace with your actual ABI from artifacts
 const ABI = contractJson.abi;
