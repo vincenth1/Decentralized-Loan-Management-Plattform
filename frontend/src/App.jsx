@@ -4,7 +4,7 @@ import "./App.css";
 import contractJson from "./LiquidityPool.json";
 
 // Replace with your deployed contract address
-const CONTRACT_ADDRESS = "0x5B7c5344F3232926d7F3f28615d782926Ae5C147";
+const CONTRACT_ADDRESS = "0x021de5aF12607eb833b90277e02e99DA6E758f9D";
 
 // Replace with your actual ABI from artifacts
 const ABI = contractJson.abi;
@@ -168,67 +168,106 @@ function App() {
   }, [contract]);
 
   return (
-    <div className="App">
-      <h1>Liquidity Pool</h1>
-      <button onClick={connectWallet}>
-        {account ? `Connected: ${account.slice(0, 6)}...` : "Connect Wallet"}
-      </button>
+    <div>
+      <nav className="navbar">
+        <div className="nav-brand">DeFi Lending Pool</div>
+        <div className="nav-wallet">
+          <button className="connect-button" onClick={connectWallet}>
+            {account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet"}
+          </button>
+        </div>
+      </nav>
 
-      <p>Pool Balance: {balance} Sonic</p>
-      <p>Your Debt: {debt} Sonic</p>
-      <p>Your Credit Score: {creditScore !== null ?  creditScore : null }</p>
-      {contractOwner && <p>Contract Owner: {contractOwner}</p>}
-      {borrowTime && <p>Last Borrowed At: {borrowTime}</p>}
+      <div className="app-container">
+        <div className="main-content">
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h3>Pool Balance</h3>
+              <p>{balance} SONIC</p>
+            </div>
+            <div className="stat-card">
+              <h3>Your Debt</h3>
+              <p>{debt} SONIC</p>
+            </div>
+            <div className="stat-card">
+              <h3>Credit Score</h3>
+              <p>{creditScore !== null ? creditScore : "N/A"}</p>
+            </div>
+          </div>
 
-      <button onClick={() => handleAddFunds("0.1")}>Add 0.1 Sonic</button>
+          <div className="actions-grid">
+            <div className="action-section">
+              <h2>Add Liquidity</h2>
+              <div className="button-group">
+                <button className="action-button" onClick={() => handleAddFunds("0.1")}>
+                  Add 0.1 SONIC
+                </button>
+                <div className="custom-amount">
+                  <input
+                    type="number"
+                    placeholder="Enter amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    min="0"
+                    step="0.01"
+                  />
+                  <button onClick={() => handleAddFunds(amount)}>Add Custom Amount</button>
+                </div>
+              </div>
+            </div>
 
-      <input
-        type="number"
-        placeholder="Enter Sonic amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        min="0"
-        step="0.01"
-      />
-      <button onClick={() => handleAddFunds(amount)}>Add Custom Amount</button>
+            <div className="action-section">
+              <h2>Lending Actions</h2>
+              <div className="button-group">
+                <button className="action-button" onClick={handleBorrow}>
+                  Borrow 0.05 SONIC
+                </button>
+                <button className="action-button" onClick={handleRepay}>
+                  Repay 0.05 SONIC
+                </button>
+              </div>
+            </div>
+          </div>
 
-      {account &&
-        contractOwner &&
-        account.toLowerCase() === contractOwner.toLowerCase() && (
-          <button onClick={handleExtract}>Extract 0.05 Sonic</button>
-        )}
+          {account &&
+            contractOwner &&
+            account.toLowerCase() === contractOwner.toLowerCase() && (
+              <div className="admin-section">
+                <h2>Admin Controls</h2>
+                <button className="admin-button" onClick={handleExtract}>
+                  Extract 0.05 SONIC
+                </button>
+                
+                <div className="credit-score-controls">
+                  <h3>Assign Credit Score</h3>
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      placeholder="User wallet address"
+                      value={userToScore}
+                      onChange={(e) => setUserToScore(e.target.value)}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Score (0-100)"
+                      min="0"
+                      max="100"
+                      value={scoreToAssign}
+                      onChange={(e) => setScoreToAssign(e.target.value)}
+                    />
+                    <button onClick={handleAssignScore}>Assign Score</button>
+                  </div>
+                </div>
+              </div>
+            )}
+        </div>
 
-      <button onClick={handleBorrow}>Borrow 0.05 Sonic</button>
-      <button onClick={handleRepay}>Repay 0.05 Sonic</button>
-
-      {account &&
-        contractOwner &&
-        account.toLowerCase() === contractOwner.toLowerCase() && (
-          <div style={{ marginTop: "2em" }}>
-            <h3>Assign Credit Score (Owner Only)</h3>
-            <input
-              type="text"
-              placeholder="User wallet address"
-              value={userToScore}
-              onChange={(e) => setUserToScore(e.target.value)}
-              style={{ width: "300px" }}
-            />
-            <br />
-            <input
-              type="number"
-              placeholder="Score (0-100)"
-              min="0"
-              max="100"
-              value={scoreToAssign}
-              onChange={(e) => setScoreToAssign(e.target.value)}
-              style={{ width: "100px", marginTop: "5px" }}
-            />
-            <br />
-            <button onClick={handleAssignScore} style={{ marginTop: "10px" }}>
-              Assign Score
-            </button>
+        {borrowTime && (
+          <div className="info-footer">
+            <p>Last Borrowed: {borrowTime}</p>
           </div>
         )}
+      </div>
     </div>
   );
 }
